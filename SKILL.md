@@ -122,8 +122,26 @@ answer: Where does X live? How do I run the tests? How do I add a feature
 like Y? What will surprise me? Every answer you cannot get from the docs
 alone is a gap — fix it before presenting.
 
+Then run the **mechanical checks** — these are commands, not judgment
+calls, and all MUST pass before presenting:
+
+1. `wc -l AGENTS.md` → **150 or less.** Over budget = cut informative
+   lines until it passes; do not present and apologize.
+2. Repo metadata is evidence, not inference: any remote/hosting/author
+   line in the docs must match `git remote -v` / git config output
+   exactly. **Never construct a GitHub/GitLab URL from the repo's name —
+   that is fabrication.** No remote configured = say so.
+3. Every "convention" line cites 2+ locations; anything with one citation
+   is relabeled *observation* — grep your own output for the word
+   "convention" and check each.
+4. Proportionality: docs should not dwarf the code (a 500-line app does
+   not need 600 lines of architecture doc) — cut repetition, keep facts.
+
 ## Step 8 — Report
 
+- **The completed progress checklist** from the top of this skill —
+  checked off honestly; an unchecked item with a reason beats a falsely
+  checked one.
 - **Created:** the files, one line each.
 - **Key findings:** stack, architecture in one paragraph, top 3 sharp edges.
 - **Inconsistencies:** conventions that conflict (the team may want to pick one).
