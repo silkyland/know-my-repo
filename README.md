@@ -1,3 +1,5 @@
+![know-my-repo social preview](assets/social-preview.png)
+
 # know-my-repo
 
 **Day-one onboarding for AI agents — from zero knowledge to a cited,
