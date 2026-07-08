@@ -38,13 +38,13 @@ Copy this into your response and check items off:
 
 ```
 Know My Repo Progress:
-- [ ] Step 1: Recon — stack, size, existing knowledge files checked
-- [ ] Step 2: Deep read — structure, data flow, wiring, git trajectory (parallel)
+- [ ] Step 1: Recon — stack, size, knowledge files checked, Newcomer Questions written
+- [ ] Step 2: Deep read — structure, data flow, wiring, git trajectory, ops (parallel)
 - [ ] Step 3: Conventions — extracted with 2+ examples each; inconsistencies listed
 - [ ] Step 4: Commands — build/test/lint verified by running them
 - [ ] Step 5: Exemplar trace — one real feature followed end to end
-- [ ] Step 6: Write — AGENTS.md + docs/ARCHITECTURE.md, fully cited
-- [ ] Step 7: Cold-start test — docs answer the newcomer questions
+- [ ] Step 6: Write — Findings Brief confirmed, then AGENTS.md + docs/ARCHITECTURE.md, fully cited
+- [ ] Step 7: Cold-start test — docs answer the Newcomer Questions; mechanical checks pass
 - [ ] Step 8: Report
 ```
 
@@ -59,6 +59,15 @@ Know My Repo Progress:
   - **Substantial:** stop and ask ONE question — update what exists, or
     reset via clean-slate? Recommended answer included. Never write
     competing docs beside living ones.
+- Write the **Newcomer Questions** — a numbered list (typically 8–15) of
+  what a productive newcomer must be able to answer. Always include: where
+  does feature work happen, how do I run the tests, how is a feature added
+  end to end, how does this deploy and run in production, and what will
+  bite me first. Add repo-specific questions as recon reveals them. Steps
+  2–5 exist to answer this list: findings cite the question number they
+  answer, questions discovered mid-read are appended, and the deep read is
+  complete when every question is answered with evidence or tagged
+  `UNVERIFIED` — **not** when every file has been read.
 
 ## Step 2 — Deep read
 
@@ -72,6 +81,8 @@ same scopes sequentially — see
 3. Wiring (DI, config, registration, env)
 4. Tests & quality gates
 5. Git trajectory (~30 commits: what is the team building toward?)
+6. Operational reality (deploy pipeline, environments, background jobs,
+   data scale — docs that ignore how the thing ships are incomplete)
 
 Classify components **works / half-wired / dead**, each with a proving file
 path. Merge subagent reports and spot-check surprising claims yourself
@@ -91,7 +102,9 @@ Find the build / test / lint / run commands (manifests, CI config, Makefile)
 and **run the safe ones** (read-only: build, test, lint — not deploy, not
 migrate). Record real results: a test suite that fails on a clean checkout
 is a first-class finding, not an embarrassment to hide. Commands you could
-not run are listed as `UNVERIFIED` with the reason.
+not run are listed as `UNVERIFIED` with the reason AND what would unblock a
+real run (missing env var, service, credentials) — no unknown sits silently
+behind a bare tag.
 
 ## Step 5 — Exemplar trace
 
@@ -103,7 +116,17 @@ proven by its own code, not a generic tutorial.
 
 ## Step 6 — Write the knowledge set
 
-Follow [references/knowledge-templates.md](references/knowledge-templates.md):
+**Findings Brief Gate** — before writing a single file, present a compact
+brief in chat: stack and architecture in a sentence or two, the target file
+names (AGENTS.md vs CLAUDE.md), the verified command results, and every
+inconsistency with a recommended resolution. 10–20 lines total; this is
+the brief, not the docs. Ask for confirmation **once**. A correction here
+costs one message; after Step 6 it costs a rewrite. If the user cannot
+respond (headless/CI run), proceed — creating files is reversible and
+nothing is deleted — but leave every inconsistency dual-cited and
+unresolved, and tag any user-dependent choice `UNCONFIRMED` in the docs.
+
+Then follow [references/knowledge-templates.md](references/knowledge-templates.md):
 
 - `AGENTS.md` — ground rules from real conventions, verified commands,
   observed gotchas. **Under 150 lines.** (Write to `CLAUDE.md`/`AGENT.md`
@@ -118,9 +141,9 @@ the report and offer deep-plan as the follow-up.
 ## Step 7 — Cold-start test
 
 Re-read only the files you just wrote, as if you were a fresh agent, and
-answer: Where does X live? How do I run the tests? How do I add a feature
-like Y? What will surprise me? Every answer you cannot get from the docs
-alone is a gap — fix it before presenting.
+answer the numbered **Newcomer Questions** from Step 1 using the docs
+alone. Every question you cannot answer from the docs is a gap — fix it,
+or list it under Unverified with what would confirm it, before presenting.
 
 Then run the **mechanical checks** — these are commands, not judgment
 calls, and all MUST pass before presenting:
@@ -136,6 +159,12 @@ calls, and all MUST pass before presenting:
    "convention" and check each.
 4. Proportionality: docs should not dwarf the code (a 500-line app does
    not need 600 lines of architecture doc) — cut repetition, keep facts.
+5. Walk the Newcomer Questions by number: every question is either
+   answered in the generated docs or listed in the Unverified section.
+   A silently dropped question fails the gate.
+6. Every Gotcha line carries a `file:line` citation or an "observed
+   running `<command>`" note. A gotcha that could be pasted into any
+   repo's docs unchanged is deleted, not kept as filler.
 
 ## Step 8 — Report
 

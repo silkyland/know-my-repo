@@ -24,8 +24,11 @@ second competing instructions file.
 
 ## Gotchas
 
-<Sharp edges found during the deep read and command runs — the things that
-WILL bite a fresh agent.>
+<Sharp edges found during the deep read and command runs. Generate them
+with a pre-mortem: assume a fresh agent worked here for a day and shipped
+something broken or transplanted — the top three causes are your gotchas.
+A generic gotcha that fits any repo is a failure; every entry cites
+file:line or a command you actually ran.>
 - <Surprise>: <fact> (`file:line` or "observed running <command>").
 
 ## Commands
@@ -77,6 +80,13 @@ topology is non-obvious.>
 To add a similar feature, create the same chain: <the file list a newcomer
 would create, in order>.
 
+## How it runs (operational reality)
+
+<Deploy pipeline, environments, background jobs, data scale — from
+exploration Scope 6, each with its proving file. "No deploy config found
+in the repo (checked CI config, Dockerfiles, infra dirs)" is a valid,
+honest entry — an invented pipeline is not.>
+
 ## Conventions in full
 
 <The Step 3 output — everything that didn't fit AGENTS.md's budget.>
@@ -88,6 +98,7 @@ section is the repo's honest self-portrait — do not sand it smooth.>
 
 ## Unverified
 
-<Anything asserted by README/comments that you could not confirm, and what
-would confirm it.>
+<Anything asserted by README/comments that you could not confirm. Each
+entry names the exact command or check that would confirm it — a bare
+UNVERIFIED tag with no path to verification is an unknown sitting silent.>
 ```

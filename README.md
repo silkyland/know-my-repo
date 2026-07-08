@@ -18,13 +18,16 @@ knowledge set so no future session starts from zero again.
 /know-my-repo .
 ```
 
-1. **Recon** — detects the stack; if substantial knowledge files already
-   exist it stops and recommends [clean-slate](https://github.com/silkyland/clean-slate)
+1. **Recon** — detects the stack and writes the numbered **Newcomer
+   Questions** the whole read must answer; if substantial knowledge files
+   already exist it stops and recommends [clean-slate](https://github.com/silkyland/clean-slate)
    instead of writing competing docs.
-2. **Deep read** — five parallel exploration scopes: structure & entry
+2. **Deep read** — six parallel exploration scopes: structure & entry
    points, data flow (write AND read path), wiring, tests & CI, git
-   trajectory. Every component classified works / half-wired / dead with a
-   proving file path.
+   trajectory, and operational reality (deploy pipeline, environments,
+   background jobs). Every component classified works / half-wired / dead
+   with a proving file path. Reading ends when every Newcomer Question is
+   answered or tagged `UNVERIFIED` — not when every file has been read.
 3. **Convention extraction** — the repo's actual patterns, each proven by
    **2+ examples and no counterexample**; conflicting patterns are reported
    as inconsistencies, never silently resolved.
@@ -34,12 +37,16 @@ knowledge set so no future session starts from zero again.
 5. **Exemplar trace** — one real, recently-touched feature followed end to
    end (route → handler → service → storage → output). This becomes "How to
    add a feature here": the repo's own pattern, proven by its own code.
-6. **Write** — `AGENTS.md` (under 150 lines, behavior-changing lines only)
-   and `docs/ARCHITECTURE.md` (component map, data flow, exemplar trace,
-   inconsistencies). Every fact cited; the unverifiable tagged `UNVERIFIED`.
-7. **Cold-start test** — re-reads only the generated docs as a fresh agent:
-   can it find where things live, run the tests, add a feature? Gaps get
-   fixed before presenting.
+6. **Write** — first a 10–20 line **findings brief** in chat (target file
+   names, command results, inconsistencies with recommended resolutions)
+   confirmed once, then `AGENTS.md` (under 150 lines, behavior-changing
+   lines only) and `docs/ARCHITECTURE.md` (component map, data flow,
+   exemplar trace, how it deploys, inconsistencies). Every fact cited; the
+   unverifiable tagged `UNVERIFIED`.
+7. **Cold-start test** — re-reads only the generated docs as a fresh agent
+   and answers the numbered Newcomer Questions from them alone; mechanical
+   checks (line budget, no fabricated metadata, 2+ citations per
+   convention, cited gotchas) must pass before presenting.
 8. **Report** — findings, sharp edges, inconsistencies for the team to
    settle, and half-wired components worth a deep-plan run.
 
@@ -79,7 +86,7 @@ Or copy this directory into your agent's skills folder
 know-my-repo/
 ├── SKILL.md                          # 8-step workflow + evidence rules
 └── references/
-    ├── exploration-guide.md          # The 5 parallel scopes + classification
+    ├── exploration-guide.md          # The 6 parallel scopes + classification
     ├── conventions-guide.md          # 2+ examples rule, dimensions, counterexample checks
     └── knowledge-templates.md        # AGENTS.md / ARCHITECTURE.md structures
 ```

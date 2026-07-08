@@ -1,6 +1,6 @@
 # Exploration Guide
 
-Five scopes for the deep read. Run them as parallel subagents when
+Six scopes for the deep read. Run them as parallel subagents when
 available (each gets ONE scope and the instruction to return findings as
 `claim + file:line` pairs), or sequentially otherwise. Either way, the
 merger (you) spot-checks surprising claims before accepting them.
@@ -44,6 +44,25 @@ merger (you) spot-checks surprising claims before accepting them.
 - Recent renames/moves — signs of an in-flight refactor the docs must
   mention (an agent that ignores an in-flight refactor extends the old
   pattern and makes the split worse).
+
+## Scope 6 — Operational reality
+
+Docs that explain the code but not how it ships are incomplete — an agent
+that only knows the request path will happily break the deploy.
+
+- Deploy pipeline: how code reaches production — CI deploy jobs,
+  Dockerfile/compose, infra directories, platform config (`vercel.json`,
+  `fly.toml`, `Procfile`, …).
+- Environments: which exist (dev/staging/prod), how config differs per
+  environment, and where secrets are expected to come from.
+- Background jobs: cron, queues, workers, scheduled tasks — anything that
+  runs outside the request path and touches the same data.
+- Data scale, where discoverable: seed/fixture sizes, pagination defaults,
+  comments about volume. Docs written against a toy dataset mislead on a
+  real one.
+- Many repos have no deploy config at all — that is a finding, not a
+  blank: record "no deploy pipeline found in the repo" with the places you
+  checked, rather than guessing one.
 
 ## Classification (all scopes)
 
