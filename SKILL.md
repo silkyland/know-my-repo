@@ -69,6 +69,9 @@ Know My Repo Progress:
   complete when every question is answered with evidence or tagged
   `UNVERIFIED` — **not** when every file has been read.
 
+**Preflight:** if the repo is empty or contains only scaffolding (no
+meaningful code), note it and proceed with minimal docs reflecting that state.
+
 ## Step 2 — Deep read
 
 Read the repo like deep-plan Phase 1. If exploration subagents are
@@ -176,3 +179,13 @@ calls, and all MUST pass before presenting:
 - **Inconsistencies:** conventions that conflict (the team may want to pick one).
 - **UNVERIFIED:** what you could not confirm and why.
 - **Suggested follow-up:** half-wired components worth a deep-plan run.
+
+## When things go wrong
+
+| Situation | Response |
+|-----------|----------|
+| Repo is empty or only scaffolding | Complete with minimal docs noting current state; AGENTS.md states "scaffolding only, no features yet" |
+| Commands fail on clean checkout (Step 4) | Record honest failure with output; this is a first-class finding, not a failure of the skill |
+| No git history available | Skip git trajectory (Step 2 Scope 5); note `UNVERIFIED: no git history` in ARCHITECTURE.md; rely on file timestamps |
+| User unavailable at Findings Brief Gate (headless) | Proceed with file creation (reversible); leave inconsistencies dual-cited and unresolved; tag choices `UNCONFIRMED` |
+| Cold-start test fails (Step 7) — docs don't answer Newcomer Questions | Fix the gaps or list them under Unverified with what would confirm them; do not present until gate passes |
