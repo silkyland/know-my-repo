@@ -85,10 +85,13 @@ Or copy this directory into your agent's skills folder
 ```
 know-my-repo/
 ├── SKILL.md                          # 8-step workflow + evidence rules
-└── references/
-    ├── exploration-guide.md          # The 6 parallel scopes + classification
-    ├── conventions-guide.md          # 2+ examples rule, dimensions, counterexample checks
-    └── knowledge-templates.md        # AGENTS.md / ARCHITECTURE.md structures
+├── references/
+│   ├── exploration-guide.md          # The 6 parallel scopes + classification
+│   ├── conventions-guide.md          # 2+ examples rule, dimensions, counterexample checks
+│   └── knowledge-templates.md        # AGENTS.md / ARCHITECTURE.md structures
+└── evals/
+    ├── scenarios.md                  # 3 manual eval scenarios (query + expected behavior)
+    └── fixtures/                     # Small repos each scenario runs the skill against
 ```
 
 Follows the [Vercel skills](https://github.com/vercel-labs/skills) single-skill

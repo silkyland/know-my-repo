@@ -50,6 +50,9 @@ Know My Repo Progress:
 
 ## Step 1 — Recon
 
+- Resolve the target: if a `[project-root]` argument was given, treat that
+  path as the repo root for every step below; otherwise use the current
+  working directory. State which one you used in the final report.
 - Detect stack and size: manifests (`package.json`, `composer.json`,
   `go.mod`, …), lockfiles, top-level layout, file count.
 - Check for existing knowledge files (`CLAUDE.md`, `AGENTS.md`,

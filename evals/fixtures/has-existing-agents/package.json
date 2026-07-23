@@ -1,0 +1,10 @@
+{
+  "name": "has-existing-agents",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Legacy service with a substantial AGENTS.md already in place",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  }
+}
