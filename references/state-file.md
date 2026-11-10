@@ -11,7 +11,7 @@ it, and it is deleted (or left, headless) when the run finishes.
 ```markdown
 # know-my-repo state
 
-step: <last completed step 1–8>
+step: <0–8 — last completed step; 0 = created during Step 1, resume at Step 1; 8 = finished>
 tier: Light | Standard | Heavy
 root: <absolute project root>
 date: <YYYY-MM-DD>
@@ -31,6 +31,9 @@ history: <commit checked, or UNVERIFIED: no git history>
 
 ## Corrections
 - CORRECTED: <old belief> → <new fact> (`file:line`)
+
+## Notes
+- <preflight findings, scaffolding-only verdicts, anything without a home above>
 
 ## Cold-reader log
 | Check | Result | Notes |
@@ -61,5 +64,9 @@ A session that finds an existing state file:
    or with few citations, re-open them all. A citation that no longer
    matches is fixed and logged as a correction; if the fact itself changed,
    redo the part of the step that produced it.
-3. Tells the user in one line where it resumes, then continues at the next
+3. Checks for drift beyond citations: `git log --since=<date> --name-only`
+   over manifests and top-level layout. New packages, renamed dirs, or a
+   new framework means the tier and Newcomer Questions may be stale —
+   re-run the Step 1 sizing check and append any new questions.
+4. Tells the user in one line where it resumes, then continues at the next
    step without redoing answered Newcomer Questions.

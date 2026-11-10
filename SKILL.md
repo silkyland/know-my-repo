@@ -56,7 +56,8 @@ tiers, take the lower one and say so.
 | Standard | Several packages or a few hundred files | Parallel scopes if subagents exist | Self-check, plus a fresh-agent read if available |
 | Heavy | Monorepo, many manifests, or a read that will span sessions | Parallel scouts, one findings file per scope | Fresh-agent read required when subagents exist |
 
-All six scope questions are answered at every tier. State file and resume:
+All six scopes are covered at every tier; every Newcomer Question ends
+answered or UNVERIFIED. State file and resume:
 [references/state-file.md](references/state-file.md).
 
 ## Progress checklist
@@ -182,8 +183,8 @@ no-context reader does the same and lists its guesses (max 2 fix rounds).
 - **Inconsistencies:** conventions that conflict (the team may want to pick one).
 - **UNVERIFIED:** what you could not confirm and why.
 - **Cold-reader result:** self-check only, or fresh-agent verdicts/rounds.
-- **State file:** `.know-my-repo/state.md` kept for resume — offer to delete;
-  in a headless run, leave it.
+- **State file:** `.know-my-repo/` (state.md + findings/) kept for resume —
+  offer to delete the whole directory; in a headless run, leave it.
 - **Suggested follow-up:** half-wired components worth a deep-plan run.
 
 ## When things go wrong
@@ -195,4 +196,5 @@ no-context reader does the same and lists its guesses (max 2 fix rounds).
 | No git history available | Skip git trajectory (Step 2 Scope 5); note `UNVERIFIED: no git history` in ARCHITECTURE.md; rely on file timestamps |
 | Run interrupted or repo too big for one context | Resume from `.know-my-repo/state.md` per references/state-file.md — do not restart |
 | No subagent support | Sequential read at Light parallelism; the self-check is the whole cold-reader test; say so in the report |
+| User unavailable at Step 1 knowledge-file check (headless) | Stop before Steps 2–8; report the substantial files found and the update-vs-clean-slate choice for an attended session — never write competing docs beside living ones |
 | User unavailable at Findings Brief Gate (headless) | Proceed with file creation (reversible); leave inconsistencies dual-cited and unresolved; tag choices `UNCONFIRMED` |

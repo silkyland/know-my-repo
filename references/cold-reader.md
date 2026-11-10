@@ -47,7 +47,8 @@ in the report.
 
 Commands, not judgment calls. All MUST pass before presenting:
 
-1. `wc -l AGENTS.md` → **150 or less.** Over budget = cut informative lines
+1. `wc -l <the chosen instructions file>` (AGENTS.md / CLAUDE.md / AGENT.md)
+   → **150 or less.** Over budget = cut informative lines
    until it passes; do not present and apologize.
 2. Repo metadata is evidence, not inference: any remote/hosting/author line
    in the docs must match `git remote -v` / git config output exactly.
