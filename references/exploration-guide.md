@@ -1,9 +1,52 @@
 # Exploration Guide
 
-Six scopes for the deep read. Run them as parallel subagents when
-available (each gets ONE scope and the instruction to return findings as
-`claim + file:line` pairs), or sequentially otherwise. Either way, the
-merger (you) spot-checks surprising claims before accepting them.
+Six scopes for the deep read. Run them as parallel subagents when the tier
+calls for it and they are available (each gets ONE scope and the instruction
+to return findings as `claim + evidence` pairs), or sequentially otherwise —
+on Light, one pass may cover several scopes. Either way, the merger (you)
+spot-checks surprising claims before accepting them: a scout's wrong belief
+is a `CORRECTED` entry like your own.
+
+## Findings format
+
+Every finding lands as one row — in `.know-my-repo/findings/<scope>.md` on
+Standard/Heavy, or directly in the state file on Light:
+
+```
+claim | evidence (file:line, or command + output) | VERIFIED/UNVERIFIED | NQ#
+```
+
+`NQ#` is the Newcomer Question the finding answers. Findings that answer no
+question are still kept when they are load-bearing (a sharp edge, a
+half-wired component); the rest are noise.
+
+**Corrections** are collected across all scopes and steps, not just here:
+whenever a claim in a README, comment, existing doc, commit message, or
+your own earlier hypothesis turns out wrong against the code, log
+`CORRECTED: <old belief> → <new fact> (file:line)` in the state file's
+Corrections section. Check the places claims hide: doc comments above
+functions, README "how it works" sections, TODO/FIXME notes that describe
+finished or abandoned work, and config defaults nobody reads anymore.
+
+## Scout brief (Standard/Heavy)
+
+```
+Objective: answer Newcomer Questions <numbers> for <project root>.
+Scope: <one scope from below, with its path boundaries>. Out of scope:
+<what the other scouts cover>.
+Sources, in order: the repo's own code and tests, then installed
+dependencies (vendor/, node_modules/) for framework behavior, then official
+docs for the locked version. Recalled API knowledge does not count; tag it
+UNVERIFIED.
+Output: write findings to <root>/.know-my-repo/findings/<scope>.md in the
+findings format above. Reply with that path and at most 10 lines of summary.
+Log any repo-doc claim the code contradicts as CORRECTED.
+Do not edit project files. Stop when every assigned question is answered
+or tagged UNVERIFIED.
+```
+
+When a report comes back, read the findings file rather than only the
+reply, and open the cited line for anything surprising or load-bearing.
 
 ## Scope 1 — Structure & entry points
 

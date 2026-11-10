@@ -41,6 +41,11 @@ checks per dimension beat ten unchecked declarations. The most common
 inconsistencies live between old and new code — compare the oldest and the
 newest module doing the same kind of work.
 
+A convention the docs *claim* but the code does not follow is not an
+inconsistency between two code patterns — it is a `CORRECTED` entry: the
+doc's claim is the old belief, the code is the evidence. Log it in the
+state file's Corrections section and let the report carry it.
+
 ## Output format
 
 One line each, ready to paste into AGENTS.md:

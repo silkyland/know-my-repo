@@ -14,9 +14,9 @@ harness — run each scenario against its fixture and check the result against
   extraction, command verification, exemplar trace.
 - `fixtures/empty-scaffold/` — `package.json` only, no code. Exercises the
   empty-repo preflight path.
-- `fixtures/has-existing-agents/` — a substantial (25+ meaningful line)
-  `AGENTS.md` already present. Exercises the "stop and ask: update or
-  clean-slate?" branch in Step 1.
+- `fixtures/has-existing-agents/` — an `AGENTS.md` at the ~20-meaningful-line
+  substantial threshold already present. Exercises the "stop and ask: update
+  or clean-slate?" branch in Step 1.
 
 ## Running a scenario
 
@@ -26,4 +26,6 @@ cd evals/fixtures/tiny-node-api
 ```
 
 Then compare the run against that fixture's `expected_behavior` entries in
-[scenarios.md](scenarios.md).
+[scenarios.md](scenarios.md). A run writes `AGENTS.md`, `docs/`, and
+`.know-my-repo/` inside the fixture — delete them before re-running a
+scenario so each run starts clean.

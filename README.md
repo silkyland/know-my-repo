@@ -18,16 +18,19 @@ knowledge set so no future session starts from zero again.
 /know-my-repo .
 ```
 
-1. **Recon** — detects the stack and writes the numbered **Newcomer
-   Questions** the whole read must answer; if substantial knowledge files
+1. **Recon** — sizes the effort (Light / Standard / Heavy), detects the
+   stack, writes the numbered **Newcomer Questions** the whole read must
+   answer, and opens a resumable state file; if substantial knowledge files
    already exist it stops and recommends [clean-slate](https://github.com/silkyland/clean-slate)
    instead of writing competing docs.
-2. **Deep read** — six parallel exploration scopes: structure & entry
-   points, data flow (write AND read path), wiring, tests & CI, git
+2. **Deep read** — six exploration scopes at the tier's parallelism
+   (sequential on small repos, parallel scouts on large ones): structure &
+   entry points, data flow (write AND read path), wiring, tests & CI, git
    trajectory, and operational reality (deploy pipeline, environments,
    background jobs). Every component classified works / half-wired / dead
-   with a proving file path. Reading ends when every Newcomer Question is
-   answered or tagged `UNVERIFIED` — not when every file has been read.
+   with a proving file path; claims the repo's own docs got wrong are logged
+   as `CORRECTED`. Reading ends when every Newcomer Question is answered or
+   tagged `UNVERIFIED` — not when every file has been read.
 3. **Convention extraction** — the repo's actual patterns, each proven by
    **2+ examples and no counterexample**; conflicting patterns are reported
    as inconsistencies, never silently resolved.
@@ -37,18 +40,20 @@ knowledge set so no future session starts from zero again.
 5. **Exemplar trace** — one real, recently-touched feature followed end to
    end (route → handler → service → storage → output). This becomes "How to
    add a feature here": the repo's own pattern, proven by its own code.
-6. **Write** — first a 10–20 line **findings brief** in chat (target file
-   names, command results, inconsistencies with recommended resolutions)
-   confirmed once, then `AGENTS.md` (under 150 lines, behavior-changing
-   lines only) and `docs/ARCHITECTURE.md` (component map, data flow,
-   exemplar trace, how it deploys, inconsistencies). Every fact cited; the
-   unverifiable tagged `UNVERIFIED`.
-7. **Cold-start test** — re-reads only the generated docs as a fresh agent
-   and answers the numbered Newcomer Questions from them alone; mechanical
-   checks (line budget, no fabricated metadata, 2+ citations per
-   convention, cited gotchas) must pass before presenting.
-8. **Report** — findings, sharp edges, inconsistencies for the team to
-   settle, and half-wired components worth a deep-plan run.
+6. **Write** — first a 10–20 line **findings brief** in chat (tier, target
+   file names, command results, corrections highlights, inconsistencies
+   with recommended resolutions) confirmed once, then `AGENTS.md` (under
+   150 lines, behavior-changing lines only) and `docs/ARCHITECTURE.md`
+   (component map, data flow, exemplar trace, how it deploys,
+   inconsistencies, corrections). Every fact cited; the unverifiable tagged
+   `UNVERIFIED`.
+7. **Cold-reader test** — re-reads only the generated docs and answers the
+   numbered Newcomer Questions from them alone; on Standard/Heavy a fresh
+   no-context agent does the same and lists its guesses. Mechanical checks
+   (line budget, no fabricated metadata, 2+ citations per convention, cited
+   gotchas, corrections disposition) must pass before presenting.
+8. **Report** — findings, corrections ledger, sharp edges, inconsistencies
+   for the team to settle, and half-wired components worth a deep-plan run.
 
 Nothing is deleted — this skill only creates.
 
@@ -57,16 +62,17 @@ Nothing is deleted — this skill only creates.
 | Skill | Moment |
 |-------|--------|
 | **know-my-repo** | Day one: onboard onto a repo with zero knowledge |
-| [deep-plan](https://github.com/silkyland/deep-plan) | Plan the next feature/refactor — evidence-gated, 7 phases |
+| [deep-plan](https://github.com/silkyland/deep-plan) | Plan the next feature/refactor — evidence-gated, 8 phases |
 | [deep-plan-ingest](https://github.com/silkyland/deep-plan) | Distill an accepted plan into living knowledge files |
+| [scaffold-my-plan](https://github.com/silkyland/scaffold-my-plan) | Turn a plan's first milestone into a running first slice |
 | [clean-slate](https://github.com/silkyland/clean-slate) | Reset rotten knowledge files — backup-gated |
 | [transform-my-repo](https://github.com/silkyland/transform-my-repo) | Change the architecture: migration feasibility + strategy |
-| [twin-my-site](https://github.com/silkyland/twin-my-site) | Extend the web product with a native mobile twin |
-| [jury-my-repo](https://github.com/silkyland/jury-my-repo) | Multi-agent adversarial audit with a verified verdict |
-| [love-me-love-my-docs](https://github.com/silkyland/love-me-love-my-docs) | A user manual that regenerates itself |
-| [seed-ah](https://github.com/silkyland/seed-ah) | Fake-but-production-like demo data with a manifest |
-| [create-my-team](https://github.com/silkyland/create-my-team) | Spawn and manage a subagent team for any mission |
 | [reproduce-my-bug](https://github.com/silkyland/reproduce-my-bug) | Prove the bug before anyone fixes it |
+| [audit-my-layout](https://github.com/silkyland/audit-my-layout) | Measure a live page's visual consistency, viewport by viewport |
+| [ground-my-ui](https://github.com/silkyland/ground-my-ui) | Fix UI that looks broken — verify contracts against installed source |
+| [ground-my-shopware](https://github.com/silkyland/ground-my-shopware) | Shopware 6 admin/storefront UI grounded in installed vendor source |
+| [seed-ah](https://github.com/silkyland/seed-ah) | Fake-but-production-like demo data with a manifest |
+| [love-me-love-my-docs](https://github.com/silkyland/love-me-love-my-docs) | A user manual that regenerates itself |
 
 Shared law: **no claim without evidence.** A convention needs two examples;
 a command needs a real run; a fact needs a `file:line`.
@@ -84,11 +90,13 @@ Or copy this directory into your agent's skills folder
 
 ```
 know-my-repo/
-├── SKILL.md                          # 8-step workflow + evidence rules
+├── SKILL.md                          # 8-step workflow + evidence rules + effort tiers
 ├── references/
-│   ├── exploration-guide.md          # The 6 parallel scopes + classification
+│   ├── exploration-guide.md          # The 6 scopes, findings format, scout brief
 │   ├── conventions-guide.md          # 2+ examples rule, dimensions, counterexample checks
-│   └── knowledge-templates.md        # AGENTS.md / ARCHITECTURE.md structures
+│   ├── knowledge-templates.md        # AGENTS.md / ARCHITECTURE.md structures
+│   ├── state-file.md                 # .know-my-repo/state.md — resume for long runs
+│   └── cold-reader.md                # Cold-reader test protocol + mechanical checks
 └── evals/
     ├── scenarios.md                  # 3 manual eval scenarios (query + expected behavior)
     └── fixtures/                     # Small repos each scenario runs the skill against

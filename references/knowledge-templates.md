@@ -3,7 +3,10 @@
 Structures for the two files Step 6 creates. Family philosophy: every fact
 carries a citation or a command you ran; anything unverifiable is tagged
 `UNVERIFIED` or omitted. **A thin true document beats a thick maybe-true
-one** — these files start minimal and grow only with evidence.
+one** — these files start minimal and grow only with evidence. A `file:line`
+citation IS the verification; claims with no citation get `UNVERIFIED` plus
+what would confirm them, and disproved repo claims are `CORRECTED` entries,
+never repeated as fact.
 
 ## Contents
 
@@ -33,7 +36,9 @@ second competing instructions file.
 with a pre-mortem: assume a fresh agent worked here for a day and shipped
 something broken or transplanted — the top three causes are your gotchas.
 A generic gotcha that fits any repo is a failure; every entry cites
-file:line or a command you actually ran.>
+file:line or a command you actually ran. A CORRECTED entry whose old belief
+would change behavior (a README claim the code disproves) belongs here,
+citing both sides.>
 - <Surprise>: <fact> (`file:line` or "observed running <command>").
 
 ## Commands
@@ -96,10 +101,14 @@ honest entry — an invented pipeline is not.>
 
 <The Step 3 output — everything that didn't fit AGENTS.md's budget.>
 
-## Inconsistencies and sharp edges
+## Inconsistencies, corrections, and sharp edges
 
-<Conflicting patterns (both sides cited) and load-bearing quirks. This
-section is the repo's honest self-portrait — do not sand it smooth.>
+<Conflicting patterns (both sides cited), CORRECTED entries (what repo
+docs/comments claimed vs what the code does, both cited), and load-bearing
+quirks. Format corrections as `- CORRECTED: <old belief> → <new fact>
+(file:line)`. This section is the repo's honest self-portrait — do not sand
+it smooth. Corrections that change agent behavior also earn a Gotcha line
+in AGENTS.md; the rest live here only.>
 
 ## Unverified
 

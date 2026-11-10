@@ -16,101 +16,120 @@ argument-hint: "[project-root]"
 
 # Know My Repo
 
-Day one on a codebase you have never seen. No docs, no notes, no memory —
-just code. This skill turns that into a knowledge set a future agent can
-load and be productive immediately, built the only honest way: **by reading
-the code, running the commands, and citing everything.**
+Day one on a codebase you have never seen — no docs, no notes, no memory,
+just code. This skill builds the knowledge set a future agent can load and
+be productive from: **read the code, run the commands, cite everything.**
 
-Sibling skills: this one creates knowledge where there is none. If rotten
-knowledge files already exist, recommend **clean-slate** (reset with backup
-gate) instead of writing competing docs next to them.
+Sibling skills: this one creates knowledge where there is none. Rotten
+knowledge files → recommend **clean-slate** (backup-gated reset), never
+competing docs; half-wired components → **deep-plan** is the follow-up.
+
+## Evidence tags
+
+Tag every claim about the repo (state file, findings brief, report):
+
+| Tag | Meaning | Carries |
+|-----|---------|---------|
+| `VERIFIED` | You opened the source or ran the command yourself | `file:line`, or the command and its output |
+| `UNVERIFIED` | You could not confirm it | What you tried and what would confirm it |
+| `CORRECTED` | A belief that turned out wrong — yours, a comment's, a README's, an existing doc's | The old belief and the evidence against it |
+
+Recalled API knowledge is a hypothesis: verify against the installed source
+or tag `UNVERIFIED`; every `CORRECTED` lands in the corrections ledger.
 
 ## The Prime Directive (family rule)
 
-> **No claim without evidence.** Every statement in the generated docs
-> carries a `file:line` citation, a command you actually ran, or an explicit
-> `UNVERIFIED` tag. A convention is only a convention with **two or more
-> examples and no counterexample** — otherwise report it as an inconsistency.
+> **No claim without evidence.** Every generated-docs statement carries a
+> `file:line` citation, a command you ran, or an explicit `UNVERIFIED` tag.
+> A convention needs **2+ examples and no counterexample** — otherwise it is
+> an inconsistency to report. A claim the repo's docs got wrong is a
+> `CORRECTED` entry, never a fact to repeat.
+
+## Effort triage
+
+Size the read to the repo and record the tier in the state file. Between two
+tiers, take the lower one and say so.
+
+| Tier | Signal | Deep read | Cold-reader check |
+|------|--------|-----------|-------------------|
+| Light | Small repo — roughly under 50 source files, one package | Sequential; scopes may merge | Self-check only |
+| Standard | Several packages or a few hundred files | Parallel scopes if subagents exist | Self-check, plus a fresh-agent read if available |
+| Heavy | Monorepo, many manifests, or a read that will span sessions | Parallel scouts, one findings file per scope | Fresh-agent read required when subagents exist |
+
+All six scope questions are answered at every tier. State file and resume:
+[references/state-file.md](references/state-file.md).
 
 ## Progress checklist
 
-Copy this into your response and check items off:
+Copy into your response and check off:
 
 ```
 Know My Repo Progress:
-- [ ] Step 1: Recon — stack, size, knowledge files checked, Newcomer Questions written
-- [ ] Step 2: Deep read — structure, data flow, wiring, git trajectory, ops (parallel)
-- [ ] Step 3: Conventions — extracted with 2+ examples each; inconsistencies listed
+- [ ] Step 1: Recon — tier, stack/size, knowledge files checked, Newcomer Questions, state file
+- [ ] Step 2: Deep read — six scopes at the tier's parallelism; corrections logged
+- [ ] Step 3: Conventions — 2+ examples each; inconsistencies listed
 - [ ] Step 4: Commands — build/test/lint verified by running them
 - [ ] Step 5: Exemplar trace — one real feature followed end to end
-- [ ] Step 6: Write — Findings Brief confirmed, then AGENTS.md + docs/ARCHITECTURE.md, fully cited
-- [ ] Step 7: Cold-start test — docs answer the Newcomer Questions; mechanical checks pass
-- [ ] Step 8: Report
+- [ ] Step 6: Write — Findings Brief confirmed, then AGENTS.md + docs/ARCHITECTURE.md
+- [ ] Step 7: Cold-reader test — docs answer the Newcomer Questions; checks pass
+- [ ] Step 8: Report — findings, corrections, inconsistencies, state-file disposition
 ```
 
 ## Step 1 — Recon
 
-- Resolve the target: if a `[project-root]` argument was given, treat that
-  path as the repo root for every step below; otherwise use the current
-  working directory. State which one you used in the final report.
-- Detect stack and size: manifests (`package.json`, `composer.json`,
-  `go.mod`, …), lockfiles, top-level layout, file count.
+- Target: a `[project-root]` argument, else the current directory; state
+  which you used in the report.
+- `.know-my-repo/state.md` exists → this is a **resume** — follow
+  [references/state-file.md](references/state-file.md), say where you pick up.
+- Detect stack and size — manifests (`package.json`, `composer.json`,
+  `go.mod`, …), lockfiles, layout, file count — and pick the tier.
 - Check for existing knowledge files (`CLAUDE.md`, `AGENTS.md`,
-  `.cursorrules`, `docs/ARCHITECTURE.md`, …):
-  - **None or trivial** (< ~20 meaningful lines): proceed; merge the trivial
-    content in later.
-  - **Substantial:** stop and ask ONE question — update what exists, or
-    reset via clean-slate? Recommended answer included. Never write
-    competing docs beside living ones.
-- Write the **Newcomer Questions** — a numbered list (typically 8–15) of
-  what a productive newcomer must be able to answer. Always include: where
-  does feature work happen, how do I run the tests, how is a feature added
-  end to end, how does this deploy and run in production, and what will
-  bite me first. Add repo-specific questions as recon reveals them. Steps
-  2–5 exist to answer this list: findings cite the question number they
-  answer, questions discovered mid-read are appended, and the deep read is
-  complete when every question is answered with evidence or tagged
-  `UNVERIFIED` — **not** when every file has been read.
+  `.cursorrules`, `docs/ARCHITECTURE.md`, …): **none or trivial** (< ~20
+  meaningful lines) → proceed, merge trivial content later; **substantial**
+  → stop and ask ONE question — update, or reset via clean-slate? Recommended
+  answer included; never write competing docs beside living ones.
+- Write the **Newcomer Questions** — typically 8–15, what a productive
+  newcomer must answer: where feature work happens, how to run tests, how a
+  feature is added end to end, how it deploys and runs in production, what
+  will bite me first. Steps 2–5 answer this list: findings cite the question
+  number, mid-read questions are appended, and the read ends when every
+  question is answered with evidence or tagged `UNVERIFIED` — not when
+  every file has been read.
+- Create `.know-my-repo/state.md` from the template — on every tier.
 
-**Preflight:** if the repo is empty or contains only scaffolding (no
-meaningful code), note it and proceed with minimal docs reflecting that state.
+**Preflight:** empty repo or scaffolding only (no meaningful code) → note
+it, proceed with minimal docs reflecting that state.
 
 ## Step 2 — Deep read
 
-Read the repo like deep-plan Phase 1. If exploration subagents are
-available, fan out **in parallel with distinct scopes**; otherwise cover the
-same scopes sequentially — see
-[references/exploration-guide.md](references/exploration-guide.md):
+Read the repo like deep-plan Phase 1, at the tier's parallelism — scopes,
+findings format, scout brief:
+[references/exploration-guide.md](references/exploration-guide.md).
+Structure & entry points · data flow (write AND read path) · wiring ·
+tests & quality gates · git trajectory · operational reality (deploy,
+environments, background jobs, data scale — docs ignoring how it ships are
+incomplete).
 
-1. Structure & entry points
-2. Data flow (write path AND read path, end to end)
-3. Wiring (DI, config, registration, env)
-4. Tests & quality gates
-5. Git trajectory (~30 commits: what is the team building toward?)
-6. Operational reality (deploy pipeline, environments, background jobs,
-   data scale — docs that ignore how the thing ships are incomplete)
-
-Classify components **works / half-wired / dead**, each with a proving file
-path. Merge subagent reports and spot-check surprising claims yourself
-before accepting them.
+Classify components **works / half-wired / dead** with a proving file path.
+Merge subagent reports and spot-check surprising claims — a scout's wrong
+belief is a `CORRECTED` entry like your own. Log corrections as they surface
+(READMEs, comments, docs, recon hypotheses the code contradicts). Update the
+state file at each step exit (Light: after Steps 3 and 5).
 
 ## Step 3 — Extract conventions
 
-Conventions are what make generated code look native. Extract them with
-evidence per [references/conventions-guide.md](references/conventions-guide.md):
-naming, module boundaries, error handling, state, styling, test patterns.
-**Rule: 2+ examples = convention; 1 example = observation; conflicting
-examples = inconsistency (report it, do not pick a winner silently).**
+Conventions make generated code look native. Extract them per
+[references/conventions-guide.md](references/conventions-guide.md) — naming,
+boundaries, errors, state, styling, tests. **2+ examples = convention;
+1 = observation; conflicts = inconsistency — report both sides.**
 
 ## Step 4 — Verify the commands
 
-Find the build / test / lint / run commands (manifests, CI config, Makefile)
-and **run the safe ones** (read-only: build, test, lint — not deploy, not
-migrate). Record real results: a test suite that fails on a clean checkout
-is a first-class finding, not an embarrassment to hide. Commands you could
-not run are listed as `UNVERIFIED` with the reason AND what would unblock a
-real run (missing env var, service, credentials) — no unknown sits silently
-behind a bare tag.
+Find the build / test / lint / run commands (manifests, CI config,
+Makefile) and **run the safe ones** (read-only: build, test, lint — not
+deploy, not migrate). Record real results — a suite failing on a clean
+checkout is a first-class finding. Commands you could not run are
+`UNVERIFIED` with the reason AND what would unblock a real run.
 
 ## Step 5 — Exemplar trace
 
@@ -123,64 +142,48 @@ proven by its own code, not a generic tutorial.
 ## Step 6 — Write the knowledge set
 
 **Findings Brief Gate** — before writing a single file, present a compact
-brief in chat: stack and architecture in a sentence or two, the target file
-names (AGENTS.md vs CLAUDE.md), the verified command results, and every
-inconsistency with a recommended resolution. 10–20 lines total; this is
-the brief, not the docs. Ask for confirmation **once**. A correction here
-costs one message; after Step 6 it costs a rewrite. If the user cannot
-respond (headless/CI run), proceed — creating files is reversible and
-nothing is deleted — but leave every inconsistency dual-cited and
-unresolved, and tag any user-dependent choice `UNCONFIRMED` in the docs.
+brief in chat: tier, stack and architecture in a sentence or two, target
+file names (AGENTS.md vs CLAUDE.md), verified command results, corrections
+ledger highlights, and every inconsistency with a recommended resolution.
+10–20 lines; this is the brief, not the docs. Ask for confirmation **once**
+— a correction here costs one message, after Step 6 it costs a rewrite. If
+the user cannot respond (headless/CI run), proceed — creating files is
+reversible and nothing is deleted — but leave every inconsistency
+dual-cited and unresolved, and tag user-dependent choices `UNCONFIRMED`.
 
-Then follow [references/knowledge-templates.md](references/knowledge-templates.md):
+Write only the knowledge files and `.know-my-repo/` — nothing else — per
+[references/knowledge-templates.md](references/knowledge-templates.md):
 
 - `AGENTS.md` — ground rules from real conventions, verified commands,
   observed gotchas. **Under 150 lines.** (Write to `CLAUDE.md`/`AGENT.md`
   instead if the repo's tooling expects that name.)
 - `docs/ARCHITECTURE.md` — overview, component table with status, data flow,
-  the exemplar trace, inconsistencies and sharp edges.
+  the exemplar trace, inconsistencies, corrections, and sharp edges.
 
-Do NOT generate a ROADMAP.md — direction is the user's call, not the
-code's. If half-wired components suggest unfinished intent, list them in
-the report and offer deep-plan as the follow-up.
+Do NOT generate a ROADMAP.md — direction is the user's call, not the code's.
+Half-wired components are unfinished intent: list them, offer deep-plan.
 
-## Step 7 — Cold-start test
+## Step 7 — Cold-reader test
 
-Re-read only the files you just wrote, as if you were a fresh agent, and
-answer the numbered **Newcomer Questions** from Step 1 using the docs
-alone. Every question you cannot answer from the docs is a gap — fix it,
-or list it under Unverified with what would confirm it, before presenting.
-
-Then run the **mechanical checks** — these are commands, not judgment
-calls, and all MUST pass before presenting:
-
-1. `wc -l AGENTS.md` → **150 or less.** Over budget = cut informative
-   lines until it passes; do not present and apologize.
-2. Repo metadata is evidence, not inference: any remote/hosting/author
-   line in the docs must match `git remote -v` / git config output
-   exactly. **Never construct a GitHub/GitLab URL from the repo's name —
-   that is fabrication.** No remote configured = say so.
-3. Every "convention" line cites 2+ locations; anything with one citation
-   is relabeled *observation* — grep your own output for the word
-   "convention" and check each.
-4. Proportionality: docs should not dwarf the code (a 500-line app does
-   not need 600 lines of architecture doc) — cut repetition, keep facts.
-5. Walk the Newcomer Questions by number: every question is either
-   answered in the generated docs or listed in the Unverified section.
-   A silently dropped question fails the gate.
-6. Every Gotcha line carries a `file:line` citation or an "observed
-   running `<command>`" note. A gotcha that could be pasted into any
-   repo's docs unchanged is deleted, not kept as filler.
+Protocol, fresh-agent prompt, and mechanical checks live in
+[references/cold-reader.md](references/cold-reader.md): answer the Newcomer
+Questions from the generated docs alone; on Standard/Heavy a fresh
+no-context reader does the same and lists its guesses (max 2 fix rounds).
 
 ## Step 8 — Report
 
-- **The completed progress checklist** from the top of this skill —
-  checked off honestly; an unchecked item with a reason beats a falsely
-  checked one.
-- **Created:** the files, one line each.
+- **The completed progress checklist**, checked off honestly — an unchecked
+  item with a reason beats a falsely checked one.
+- **Tier and created files:** the tier chosen and why, then each file, one line.
 - **Key findings:** stack, architecture in one paragraph, top 3 sharp edges.
+- **Corrections:** every `CORRECTED` entry, or "none — checked READMEs,
+  comments, docs, and recon hypotheses". An empty ledger with its checks
+  listed beats an invented one.
 - **Inconsistencies:** conventions that conflict (the team may want to pick one).
 - **UNVERIFIED:** what you could not confirm and why.
+- **Cold-reader result:** self-check only, or fresh-agent verdicts/rounds.
+- **State file:** `.know-my-repo/state.md` kept for resume — offer to delete;
+  in a headless run, leave it.
 - **Suggested follow-up:** half-wired components worth a deep-plan run.
 
 ## When things go wrong
@@ -190,5 +193,6 @@ calls, and all MUST pass before presenting:
 | Repo is empty or only scaffolding | Complete with minimal docs noting current state; AGENTS.md states "scaffolding only, no features yet" |
 | Commands fail on clean checkout (Step 4) | Record honest failure with output; this is a first-class finding, not a failure of the skill |
 | No git history available | Skip git trajectory (Step 2 Scope 5); note `UNVERIFIED: no git history` in ARCHITECTURE.md; rely on file timestamps |
+| Run interrupted or repo too big for one context | Resume from `.know-my-repo/state.md` per references/state-file.md — do not restart |
+| No subagent support | Sequential read at Light parallelism; the self-check is the whole cold-reader test; say so in the report |
 | User unavailable at Findings Brief Gate (headless) | Proceed with file creation (reversible); leave inconsistencies dual-cited and unresolved; tag choices `UNCONFIRMED` |
-| Cold-start test fails (Step 7) — docs don't answer Newcomer Questions | Fix the gaps or list them under Unverified with what would confirm them; do not present until gate passes |
